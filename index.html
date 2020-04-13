@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html  lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+
+    <title>Covid - 19 </title>
+
+    <!-- Bootstraps Java Scipts Links -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+
+    <!-- JQuery links  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <!--High CHART LIVE  -->
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+    <!--Gauge  -->
+    <script type="text/javascript" src="http://pubnub.github.io/eon/lib/eon.js"></script>
+
+
+</head>
+
+<body>
+
+    <div class="jumbotron">
+        <h1 class="text-center text-white">STAY HOME STAY HAPPY AND HEALTHY </h1>
+    </div>
+    <br>
+    <marquee style="color:blue">Nothing is more fatal to health than an over care of it
+
+When health is absent, wisdom cannot reveal itself, art cannot manifest, strength cannot fight, wealth becomes useless, and intelligence cannot be applied
+
+<a href="https://www.wiseoldsayings.com/healthy-living-quotes/#ixzz6JODN9JUp">Read more</a></marquee>
+    <br>
+    <br>
+
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-5 jumbotron p-2 mx-1"  style="background-color:white;">
+                <img src="https://static.dezeen.com/uploads/2020/03/the-spinoff-toby-morris-siouxsie-wiles-design-graphics-illustration-coronavirus_dezeen_1704_hero.gif" style="height:100%" width="100%">
+
+            </div>
+            <br>
+
+            <div class="col-5 jumbotron p-2 mx-1" style="background-color:white;">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQotNYEwDO8fMrf-UgYFi4odzQRduQHvHYfIj1_p3MTVrVFXBKA&usqp=CAU" style="height:100%" width="100%">
+
+            </div>
+            <br>
+
+
+
+        </div>
+    </div>
+    <br>
+    <div>
+        <pre>
+              To Know the current status and past count  of the corona virus <a href="https://www.worldometers.info/coronavirus/#countries">click here............</a>
+        </pre>
+
+    </div>
+
+    <style>
+
+        .jumbotron{
+            widows: 150px;
+            height: 220px;
+            justify-content: center;
+        }
+
+        .row{
+            justify-content: center;
+        }
+
+
+    </style>
+
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="container-fluid" id="data-india">
+
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+<br>
+
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="container-fluid" id="data-world">
+
+            </div>
+        </div>
+    </div>
+<div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-5 jumbotron p-2 mx-1" style="background-color:white;">
+                <h1 class="textvalue1"> Textvalue : </h1>
+                <p id="date"></p>
+            </div>
+            <br>
+
+            <div class="col-5 jumbotron p-2 mx-1" style="background-color:white;">
+                <h1 class="textvalue2">Textvalue :</h1>
+                <p id="date1"></p>
+            </div>
+            <br>
+
+
+
+        </div>
+    </div>
+    <br>
+    <div style=" text-align: center; background-color:grey">
+       <table align="center">
+           <tr>
+               <td><pre>
+        &copy; Gangsters
+        All rights are reserved
+        developed by
+      Giri R
+              Deepak Kumar M
+          Gayathri A
+         Elakiya E
+        </pre></td>
+           </tr>
+       </table>
+    </div>
+
+    <script>
+        var chartIndia;
+        var chartWorld;
+        var inc=0
+        function requestData()
+        {
+            // Ajax call to get the Data from Flask
+            var requests = $.get('/data');
+
+            var tm = requests.done(function (result)
+            {
+                // India
+                var seriesIndia = chartIndia.series[0],
+                    shiftIndia = seriesIndia.data.length > 20;
+
+                // World
+                var seriesWorld = chartWorld.series[0],
+                    shiftWorld = seriesIndia.data.length > 20;
+
+                // Add the Point
+                // Time India\
+                var data1 = [];
+                data1.push(result[0]);
+                data1.push(result[1]);
+                console.log(data1)
+
+
+                // Add the Point
+                // Time World
+                var data2 = [];
+                data2.push(result[0]);
+                data2.push(result[2]);
+
+
+                chartIndia.series[0].addPoint(data1, true, shiftIndia);
+                chartWorld.series[0].addPoint(data2, true, shiftWorld);
+                $(".textvalue1").text("");
+                $(".textvalue1").text("INDIA : " +  Math.round(data1[1]) );
+
+                $(".textvalue2").text("");
+                $(".textvalue2").text("WORLD : " +  Math.round(data2[1]) );
+                var d = new Date();
+                month=d.getMonth();
+                console.log(month)
+                dat=d.getDate();
+
+                dat = dat +inc;
+                inc+=1;
+                document.getElementById("date").innerHTML ="This much of positive cases may come at " + (dat-3) + "/" + (month+1) + "/" + 2020;
+                document.getElementById("date1").innerHTML ="This much of positive cases may come at " + (dat-3) + "/" + (month+1) + "/" + 2020;
+
+                // call it again after one second
+                setTimeout(requestData, 2000);
+
+            });
+        }
+
+        $(document).ready(function()
+        {
+            // --------------Chart 1 ----------------------------
+            chartIndia = new Highcharts.Chart({
+                chart:
+                    {
+                    renderTo: 'data-india',
+                    defaultSeriesType: 'area',
+                    events: {
+                        load: requestData
+                            }
+                    },
+                title:
+                    {
+                    text: 'INDIA'
+                    },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                        },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'count',
+                        margin: 80
+                            }
+                         },
+                series: [{
+                    color : '#c23d23',
+                    lineColor: '#303030',
+                    name: 'India',
+                    data: []
+                }]
+            });
+            // --------------Chart 1 Ends - -----------------
+
+            chartWorld = new Highcharts.Chart({
+                chart:
+                    {
+                        renderTo: 'data-world',
+                        defaultSeriesType: 'area',
+                        events: {
+                            load: requestData
+                        }
+                    },
+                title:
+                    {
+                        text: 'WORLD'
+                    },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                },
+                yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                        text: 'count',
+                        margin: 80
+                    }
+                },
+                series: [{
+                    lineColor: '#1d82b8',
+                    name: 'World',
+                    data: []
+                }]
+            });
+
+
+        });
+    </script>
+
+
+
+<script>
+    class Image{
+
+        constructor(imgUrl, size)
+        {
+            this.imgUrl=imgUrl;
+            this.size=size;
+        }
+
+        backgroundImage()
+        {
+            console.log("inside function ")
+            // Select the Image
+            var img = document.querySelector(".jumbotron");
+
+            // create Css Text
+            var text = "margin:auto;"+
+                "background-image: url("+this.imgUrl+");" +
+                "background-size:cover;"+
+                "opacity:1;"+
+                "background-blend-mode: darken;"+
+                "height: "+ this.size + "vh;";
+
+            img.style.cssText =  text;
+        }
+
+        centerTitle()
+        {
+            /*
+                Center the Title
+             */
+            var t1 = document.querySelector("#title");
+            t1.classList.add("text-white");
+            t1.classList.add("text-center");
+            t1.classList.add("display-3");
+        }
+    }
+    const imgUrl = 'https://hms.harvard.edu/sites/default/files/hero-images/coronavirus.jpg'
+    const size = "50";
+    var obj = new Image(imgUrl, size);
+    obj.backgroundImage();
+    obj.centerTitle();
+    </script>
+</body>
+
+
+</html>
